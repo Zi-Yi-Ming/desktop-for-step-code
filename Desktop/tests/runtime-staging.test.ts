@@ -10,7 +10,7 @@ test('Shared v0.1.6 patch manifest pins every reviewed pre-image, result and pat
   const root = resolve('../patches/v016');
   const manifest = JSON.parse(await readFile(join(root, 'manifest.json'), 'utf8'));
   assert.equal(manifest.commit, '81e79bc4b699148d6823fedde9b5e70d9a80255f');
-  assert.deepEqual(manifest.upstream.commits.map(entry => entry.sha), [
+  assert.deepEqual(manifest.upstream.commits.map((entry: { sha: string }) => entry.sha), [
     '7487124e7b27c604535fc8439ccd0d0b81c5c299',
     '90a57820c81c6e78e4a3ea5be3f66694ac038611',
   ]);
