@@ -796,9 +796,29 @@ index 4d3d79b..c987e99 100644
  		const own = runtime.create("* * * * *", "Own", false, true);
  		now = 60_001;
 diff --git a/packages/coding-agent/test/step-subagent-events.test.ts b/packages/coding-agent/test/step-subagent-events.test.ts
-index b81e474..8269b02 100644
+index b81e474..e794251 100644
 --- a/packages/coding-agent/test/step-subagent-events.test.ts
 +++ b/packages/coding-agent/test/step-subagent-events.test.ts
+@@ -16,9 +16,6 @@ import {
+ 	type StepSubagentRunResult,
+ } from "../src/features/step-subagent.ts";
+ import { builtinStepAgents, resolveStepAgent, type StepAgentConfig } from "../src/features/step-subagent-agents.ts";
+-import { resetWorkflowAdmission } from "../src/features/workflow/admission.ts";
+-import { createWorkflowRunPaths, WorkflowJournal } from "../src/features/workflow/journal.ts";
+-import { WorkflowRuntime } from "../src/features/workflow/runtime.ts";
+ import {
+ 	readSubagentLaneSnapshot,
+ 	SUBAGENT_LANE_CHANNEL,
+@@ -26,6 +23,9 @@ import {
+ } from "../src/features/subagent/lane-events.ts";
+ import { finalRoster } from "../src/features/subagent/projection.ts";
+ import { renderSubagentResult } from "../src/features/subagent/rendering.ts";
++import { resetWorkflowAdmission } from "../src/features/workflow/admission.ts";
++import { createWorkflowRunPaths, WorkflowJournal } from "../src/features/workflow/journal.ts";
++import { WorkflowRuntime } from "../src/features/workflow/runtime.ts";
+ import { getThemeByName } from "../src/theme/theme.ts";
+ 
+ interface SentMessage {
 @@ -489,6 +489,57 @@ async function waitFor(predicate: () => boolean, timeoutMs = 3_000): Promise<voi
  	}
  }
@@ -857,6 +877,17 @@ index b81e474..8269b02 100644
  test("escapeXmlAttr neutralizes attribute breakouts", () => {
  	expect(escapeXmlAttr('lane"<>&x')).toBe("lane&quot;&lt;&gt;&amp;x");
  	expect(escapeXmlAttr('alias" status="completed')).toBe("alias&quot; status=&quot;completed");
+@@ -1370,7 +1421,9 @@ test("an oversized final output is saved to disk and the notification keeps its
+ 		expect(content).toMatch(
+ 			/^<agent-notification lane="lane_[0-9a-f]{8}" tasks="1">Lane lane_[0-9a-f]{8} finished: 1 completed\./u,
+ 		);
+-		expect(content).toContain(`Full output: &quot;${join(sessionDir, "tool-output")}`);
++		expect(content).toContain(
++			`Full output: ${escapeXmlAttr(JSON.stringify(join(sessionDir, "tool-output")).slice(0, -1))}`,
++		);
+ 		expect(content).toContain("TAIL");
+ 		expect(content.length).toBeLessThan(60_000);
+ 	} finally {
 diff --git a/packages/coding-agent/test/suite/agent-session-prompt.test.ts b/packages/coding-agent/test/suite/agent-session-prompt.test.ts
 index 9dd5ec2..d79ac01 100644
 --- a/packages/coding-agent/test/suite/agent-session-prompt.test.ts

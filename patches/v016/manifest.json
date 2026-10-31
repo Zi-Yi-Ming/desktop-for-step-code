@@ -27,7 +27,7 @@
     "step-code-desktop-cron-enhancements.patch": "81ac50aec1c98c1d34f21f081eacfeb772cb1c3c",
     "step-code-desktop-cron-recovery-guard.patch": "daefe2df14564a3f4c4a0080d2aca47915df8af3",
     "step-code-desktop-auto-resume.patch": "edb9ad98930223bea700474c7c87f444d344acdd",
-    "step-code-desktop-v016.patch": "a78d70ac397a8be3795e84aa1dcd7a99bcd4613b"
+    "step-code-desktop-v016.patch": "96e87bb69d5badd665efa05df4a9148820d06fcb"
   },
   "sources": {
     "packages/coding-agent/src/core/agent-session.ts": "54acd866d6ad519fd33b0fdb0b7088c2d1357fc6",
@@ -89,7 +89,7 @@
     "packages/coding-agent/test/step-cron.test.ts": "c987e99d4ecad2b0d89c7e67d19b7d521b2ad9f7",
     "packages/coding-agent/test/step-extension.test.ts": "1b12e8113bdb177ad14c10712aef39f8143e903f",
     "packages/coding-agent/test/step-plan-extension.test.ts": "d994ea51263ec2a36f37b68df256eb4768334000",
-    "packages/coding-agent/test/step-subagent-events.test.ts": "8269b021febac339d9127e536be49b99f39d3bc1",
+    "packages/coding-agent/test/step-subagent-events.test.ts": "e794251cac262a272ee1359d4fd16138294da79f",
     "packages/coding-agent/test/step-usage-lifecycle.test.ts": "f0fe0840c8e94073d11e41aa6b65c1caec54e07e",
     "packages/coding-agent/test/subagent-exit-drain.test.ts": "f0932a44b429332a2c3f34351554c4560472124e",
     "packages/coding-agent/test/suite/agent-session-prompt.test.ts": "d79ac01281b1b39f2322466c4fdc412705a1b0da",
