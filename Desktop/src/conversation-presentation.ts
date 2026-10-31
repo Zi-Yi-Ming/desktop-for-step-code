@@ -123,6 +123,7 @@ export type SubagentTask = {
   toolCallId?: string;
   taskIndex?: number;
   backgroundAgentId?: string;
+  output?: string;
 };
 
 export type BackgroundSubagentStates = ReadonlyMap<string, SubagentTask['status']>;
@@ -172,6 +173,9 @@ export function subagentTasks(call: Content | undefined, result: Message | undef
       task: typeof value.task === 'string' ? value.task : '',
       status: SUBAGENT_STATUSES.includes(value.status as typeof SUBAGENT_STATUSES[number]) ? value.status as SubagentTask['status'] : 'running',
       messages: Array.isArray(value.messages) ? value.messages.filter(message => message && typeof message === 'object') as Message[] : [],
+      // Records no longer carry child transcripts; activeText is the bounded output tail the
+      // runtime keeps for every settled step.
+      output: typeof value.activeText === 'string' ? value.activeText : undefined,
       model: typeof value.model === 'string' ? value.model : undefined,
       turns: typeof usage?.turns === 'number' ? usage.turns : undefined,
     };
